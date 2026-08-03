@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { business } from "@/lib/business";
 import { cn } from "@/lib/cn";
 import { InstagramIcon, TikTokIcon, MenuIcon, CloseIcon } from "@/components/icons";
@@ -20,7 +21,6 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [lastPathname, setLastPathname] = useState(pathname);
-  const panelRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   if (pathname !== lastPathname) {
@@ -34,41 +34,6 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    if (!open) return;
-
-    document.body.style.overflow = "hidden";
-    const panel = panelRef.current;
-    const focusable = panel?.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled])'
-    );
-    focusable?.[0]?.focus();
-
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        setOpen(false);
-        toggleRef.current?.focus();
-        return;
-      }
-      if (e.key !== "Tab" || !focusable || focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
 
   return (
     <header
@@ -163,71 +128,151 @@ export function Header() {
         </div>
       </div>
 
-      {open && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          <button
-            aria-label="Close menu overlay"
-            tabIndex={-1}
-            className="absolute inset-0 bg-ink/60"
-            onClick={() => setOpen(false)}
-          />
-          <div
-            id="mobile-nav"
-            ref={panelRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation"
-            className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col gap-1 border-l-4 border-red bg-cream px-6 pb-8 pt-24 shadow-2xl animate-fade-up"
-          >
-            {navLinks.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "border-b border-ink/10 py-4 font-display text-3xl tracking-wide",
-                    active ? "text-red" : "text-ink"
-                  )}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-
-            <a
-              href={business.links.order}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex min-h-11 items-center justify-center bg-red px-6 py-4 text-center font-condensed text-lg font-bold uppercase tracking-wide text-white"
-            >
-              Order Now
-            </a>
-
-            <div className="mt-8 flex items-center gap-5">
-              <a
-                href={business.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Moe'z on Instagram"
-                className="text-ink"
-              >
-                <InstagramIcon className="h-7 w-7" />
-              </a>
-              <a
-                href={business.social.tiktok}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Moe'z on TikTok"
-                className="text-ink"
-              >
-                <TikTokIcon className="h-7 w-7" />
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
+      <MobileNav open={open} onClose={() => setOpen(false)} pathname={pathname} toggleRef={toggleRef} />
     </header>
+  );
+}
+
+function MobileNav({
+  open,
+  onClose,
+  pathname,
+  toggleRef,
+}: {
+  open: boolean;
+  onClose: () => void;
+  pathname: string;
+  toggleRef: React.RefObject<HTMLButtonElement | null>;
+}) {
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    // Lock the body by pinning it in place (rather than just
+    // overflow:hidden) — this avoids a common iOS Safari bug where
+    // fixed-position overlays get stuck mid-repaint over stale
+    // background content when the underlying page can still scroll.
+    const scrollY = window.scrollY;
+    const body = document.body;
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.overflow = "hidden";
+
+    const panel = panelRef.current;
+    const focusable = panel?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+    focusable?.[0]?.focus();
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        onClose();
+        toggleRef.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab" || !focusable || focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.overflow = "";
+      window.scrollTo(0, scrollY);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open, onClose, toggleRef]);
+
+  if (!open || typeof document === "undefined") return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[200] lg:hidden">
+      <button
+        aria-label="Close menu overlay"
+        tabIndex={-1}
+        className="absolute inset-0 bg-ink/60"
+        onClick={onClose}
+      />
+      <div
+        id="mobile-nav"
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
+        className="absolute right-0 top-0 flex h-full w-[85%] max-w-sm flex-col gap-1 overflow-y-auto border-l-4 border-red bg-cream px-6 pb-8 pt-6 shadow-2xl animate-fade-up"
+      >
+        <button
+          type="button"
+          onClick={() => {
+            onClose();
+            toggleRef.current?.focus();
+          }}
+          aria-label="Close menu"
+          className="mb-6 flex h-11 w-11 shrink-0 items-center justify-center self-end border-2 border-ink/15 text-ink"
+        >
+          <CloseIcon className="h-6 w-6" />
+        </button>
+
+        {navLinks.map((link) => {
+          const active = pathname === link.href;
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={active ? "page" : undefined}
+              className={cn(
+                "border-b border-ink/10 py-4 font-display text-3xl tracking-wide",
+                active ? "text-red" : "text-ink"
+              )}
+            >
+              {link.label}
+            </Link>
+          );
+        })}
+
+        <a
+          href={business.links.order}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex min-h-11 items-center justify-center bg-red px-6 py-4 text-center font-condensed text-lg font-bold uppercase tracking-wide text-white"
+        >
+          Order Now
+        </a>
+
+        <div className="mt-8 flex items-center gap-5">
+          <a
+            href={business.social.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Moe'z on Instagram"
+            className="text-ink"
+          >
+            <InstagramIcon className="h-7 w-7" />
+          </a>
+          <a
+            href={business.social.tiktok}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Moe'z on TikTok"
+            className="text-ink"
+          >
+            <TikTokIcon className="h-7 w-7" />
+          </a>
+        </div>
+      </div>
+    </div>,
+    document.body
   );
 }

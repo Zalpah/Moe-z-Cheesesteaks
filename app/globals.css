@@ -53,6 +53,13 @@ body {
   color: white;
 }
 
+/* We render our own clear button for search inputs; hide native ones. */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 :focus-visible {
   outline: 3px solid var(--color-red);
   outline-offset: 2px;

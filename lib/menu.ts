@@ -3,6 +3,10 @@
 // descriptions against the source images before publishing changes.
 // Prices and availability may change — see the disclaimer on the Menu page.
 
+// Update this any time menu.ts is edited, so the "prices as of" disclaimer
+// on the Menu page stays accurate.
+export const menuLastUpdated = "August 2026";
+
 export type MenuItem = {
   slug: string;
   name: string;
@@ -292,6 +296,7 @@ export const menu: MenuCategory[] = [
         variants: [
           { label: "Small", price: "$2.99" },
           { label: "Medium", price: "$4.99" },
+          { label: "Large", price: "$6.99" },
         ],
       },
       {
@@ -301,6 +306,7 @@ export const menu: MenuCategory[] = [
         variants: [
           { label: "Small", price: "$3.99" },
           { label: "Medium", price: "$5.99" },
+          { label: "Large", price: "$7.99" },
         ],
       },
       {
@@ -310,6 +316,7 @@ export const menu: MenuCategory[] = [
         variants: [
           { label: "Small", price: "$4.99" },
           { label: "Medium", price: "$6.99" },
+          { label: "Large", price: "$8.99" },
         ],
       },
       {
@@ -319,6 +326,7 @@ export const menu: MenuCategory[] = [
         variants: [
           { label: "Small", price: "$3.79" },
           { label: "Medium", price: "$5.79" },
+          { label: "Large", price: "$7.79" },
         ],
       },
       {
@@ -328,6 +336,7 @@ export const menu: MenuCategory[] = [
         variants: [
           { label: "Small", price: "$3.79" },
           { label: "Medium", price: "$5.79" },
+          { label: "Large", price: "$7.79" },
         ],
       },
       {
@@ -337,6 +346,7 @@ export const menu: MenuCategory[] = [
         variants: [
           { label: "Small", price: "$3.79" },
           { label: "Medium", price: "$5.79" },
+          { label: "Large", price: "$7.79" },
         ],
       },
       {
@@ -366,6 +376,12 @@ export const menu: MenuCategory[] = [
         name: "Chocolate",
         price: "$5.29",
         image: "/images/food/chocolate-milkshake.jpg",
+      },
+      {
+        slug: "strawberry-milkshake",
+        name: "Strawberry",
+        price: "$5.29",
+        image: "/images/food/strawberry-milkshake.jpg",
       },
       {
         slug: "oreo-milkshake",

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { MenuBrowser } from "@/components/menu/MenuBrowser";
 import { MenuImageGallery } from "@/components/menu/MenuImageGallery";
 import { StickyOrderBar } from "@/components/menu/StickyOrderBar";
+import { menuLastUpdated } from "@/lib/menu";
 
 export const metadata: Metadata = {
   title: "Menu",
@@ -24,6 +25,9 @@ export default function MenuPage() {
             Famous Philly cheesesteaks, burgers, wraps, wings, and more — made fresh in Ann Arbor. All of our
             meat is halal-certified.
           </p>
+          <p className="mt-2 text-xs italic text-ink-soft/80">
+            Prices updated as of {menuLastUpdated} and subject to change.
+          </p>
           <div className="mt-6">
             <Button href={business.links.order} external size="lg">
               Order Now
@@ -37,8 +41,8 @@ export default function MenuPage() {
 
       <Container className="max-w-5xl py-8">
         <p className="text-xs text-ink-soft">
-          Prices, descriptions, and availability are subject to change without notice. Please confirm current
-          pricing at checkout or by calling{" "}
+          Prices updated as of {menuLastUpdated}. Prices, descriptions, and availability are subject to change
+          without notice. Please confirm current pricing at checkout or by calling{" "}
           <a href={business.phoneHref} className="font-bold text-red">
             {business.phone}
           </a>
