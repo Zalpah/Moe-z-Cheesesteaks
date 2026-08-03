@@ -209,6 +209,7 @@ export const menu: MenuCategory[] = [
           "Steak or chicken, sautéed onions, sautéed green peppers, sautéed banana peppers, pepper jack cheese, Moe'z sauce.",
         price: "$15.99",
         note: "Serves 2",
+        image: "/images/food/quesadilla-pizza.jpg",
       },
     ],
   },
