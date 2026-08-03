@@ -21,7 +21,10 @@ export function GoogleReviews() {
           <h2 className="font-display text-4xl tracking-wide text-ink sm:text-5xl">What Ann Arbor Is Saying</h2>
           <div className="mt-1 flex items-center gap-2">
             <Stars rating={5} className="h-5 w-5 gap-1" />
-            <span className="font-condensed text-lg font-bold text-ink">{googleReviewSummary.rating}</span>
+            <span className="flex items-center gap-1 font-condensed text-lg font-bold text-ink">
+              {googleReviewSummary.rating}
+              <StarIcon className="h-4 w-4 text-red" aria-hidden="true" />
+            </span>
             <span className="text-sm text-ink-soft">
               ({googleReviewSummary.count.toLocaleString()} Google reviews)
             </span>
