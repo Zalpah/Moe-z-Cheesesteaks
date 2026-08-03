@@ -123,7 +123,8 @@ export function Header() {
             onClick={() => setOpen((v) => !v)}
             className="flex h-11 w-11 shrink-0 items-center justify-center text-ink"
           >
-            {open ? <CloseIcon className="h-7 w-7" /> : <MenuIcon className="h-7 w-7" />}
+            {/* Icon intentionally stays the hamburger — the open panel has its own close (X) button, so this button doesn't also swap to an X. */}
+            <MenuIcon className="h-7 w-7" />
           </button>
         </div>
       </div>
