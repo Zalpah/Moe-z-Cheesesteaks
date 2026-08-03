@@ -17,7 +17,7 @@ export function OrderNowPopup() {
     const timer = setTimeout(() => {
       setOpen(true);
       sessionStorage.setItem(SESSION_KEY, "1");
-    }, 7000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);

@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <section className="relative flex h-[62vh] min-h-[420px] items-end overflow-hidden bg-ink sm:h-[78vh] sm:min-h-[560px] lg:h-[88vh]">
       <Image
-        src="/images/food/hero-cheesesteak.jpg"
+        src="/images/food/hero-spread.jpg"
         alt="A spread of Moe'z food: loaded cheese fries, a crispy chicken wrap, a stacked double burger, and an Original Philly cheesesteak"
         fill
         priority
