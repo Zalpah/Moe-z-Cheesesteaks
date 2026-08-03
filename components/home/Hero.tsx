@@ -22,7 +22,7 @@ export function Hero() {
           <h1 className="font-display text-5xl leading-[0.95] tracking-wide text-white sm:text-6xl lg:text-8xl">
             FLAVORS
             <br />
-            REACHING <span className="text-red">SKY-HIGH</span>
+            REACHING <span className="whitespace-nowrap text-red">SKY-HIGH</span>
           </h1>
           <p className="mt-5 max-w-lg text-base text-cream/90 sm:mt-6 sm:text-lg">
             {business.shortName}&apos;s famous Philly-inspired cheesesteaks, burgers, wraps, and halal

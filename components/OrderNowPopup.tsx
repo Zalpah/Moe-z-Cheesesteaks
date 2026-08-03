@@ -61,7 +61,7 @@ export function OrderNowPopup() {
 
         <div className="relative aspect-[16/9] w-full overflow-hidden border-b-4 border-red">
           <Image
-            src="/images/food/philly-burger.jpg"
+            src="/images/food/mushroom-swiss-burger.jpg"
             alt=""
             fill
             sizes="384px"
