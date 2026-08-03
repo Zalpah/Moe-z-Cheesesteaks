@@ -3,6 +3,7 @@ import { Anton, Barlow_Condensed, Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { OrderNowPopup } from "@/components/OrderNowPopup";
 import { business } from "@/lib/business";
 import { googleReviewSummary } from "@/lib/reviews";
 
@@ -126,6 +127,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <OrderNowPopup />
       </body>
     </html>
   );

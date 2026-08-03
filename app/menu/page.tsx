@@ -26,7 +26,7 @@ export default function MenuPage() {
             meat is halal-certified.
           </p>
           <p className="mt-2 text-xs italic text-ink-soft/80">
-            Prices updated as of {menuLastUpdated} and subject to change.
+            Prices updated as of {menuLastUpdated}, in-store pricing only, and subject to change.
           </p>
           <div className="mt-6">
             <Button href={business.links.order} external size="lg">
@@ -41,8 +41,9 @@ export default function MenuPage() {
 
       <Container className="max-w-5xl py-8">
         <p className="text-xs text-ink-soft">
-          Prices updated as of {menuLastUpdated}. Prices, descriptions, and availability are subject to change
-          without notice. Please confirm current pricing at checkout or by calling{" "}
+          Prices updated as of {menuLastUpdated} and reflect in-store pricing only; online ordering and
+          delivery prices may differ. Prices, descriptions, and availability are subject to change without
+          notice. Please confirm current pricing at checkout or by calling{" "}
           <a href={business.phoneHref} className="font-bold text-red">
             {business.phone}
           </a>

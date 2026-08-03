@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <section className="py-16 sm:py-24">
+    <section className="min-h-[110vh] py-20 sm:py-28 lg:py-36">
       <Container className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
         <div className="order-2 lg:order-1">
           <Image

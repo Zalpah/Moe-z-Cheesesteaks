@@ -119,7 +119,7 @@ export function MenuBrowser() {
         </div>
       ) : (
         <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-          {menu.map((category, i) => (
+          {menu.map((category) => (
             <section key={category.slug} id={category.slug} className="scroll-mt-36 border-b-2 border-ink/10 py-10 first:pt-0 last:border-b-0">
               <div className="mb-6">
                 <h2 className="font-display text-3xl tracking-wide text-ink sm:text-4xl">{category.name}</h2>
@@ -149,19 +149,6 @@ export function MenuBrowser() {
                   </li>
                 ))}
               </ul>
-
-              {(i + 1) % 3 === 0 && (
-                <div className="mt-8 flex justify-center">
-                  <a
-                    href={business.links.order}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center justify-center bg-red px-8 py-3 font-condensed text-base font-bold uppercase tracking-wide text-white hover:bg-red-dark"
-                  >
-                    Order Now
-                  </a>
-                </div>
-              )}
             </section>
           ))}
         </div>

@@ -29,7 +29,18 @@ export function Header() {
   }
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    // Hysteresis (different enter/exit thresholds) is intentional: since
+    // shrinking the header also shrinks total page height, a single
+    // threshold can flip back and forth right at that boundary on short
+    // pages (the compact header un-triggers itself, which grows the page
+    // again, which re-triggers it, forever) — a visible flicker. Two
+    // thresholds with a gap between them prevent that feedback loop.
+    const onScroll = () => {
+      setScrolled((prev) => {
+        if (prev) return window.scrollY > 24;
+        return window.scrollY > 48;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);

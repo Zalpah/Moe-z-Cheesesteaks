@@ -15,7 +15,7 @@ export function StickyOrderBar() {
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-40 border-t-2 border-red bg-cream/95 p-3 backdrop-blur transition-transform duration-200 sm:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t-2 border-red bg-cream/95 p-3 backdrop-blur transition-transform duration-200 ${
         visible ? "translate-y-0" : "translate-y-full"
       }`}
     >
@@ -23,7 +23,7 @@ export function StickyOrderBar() {
         href={business.links.order}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex min-h-12 w-full items-center justify-center bg-red font-condensed text-base font-bold uppercase tracking-wide text-white"
+        className="mx-auto flex min-h-12 w-full max-w-xs items-center justify-center bg-red font-condensed text-base font-bold uppercase tracking-wide text-white hover:bg-red-dark sm:max-w-sm"
       >
         Order Now
       </a>

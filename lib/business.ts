@@ -45,7 +45,7 @@ export const business = {
     order:
       "https://order.online/store/moe'z-famous-cheesesteaks-ann-arbor-1029851/?delivery=true&hideModal=true",
     catering: "https://www.ezcater.com/catering/moez-famous-cheesesteaks-and-burgers-3",
-    directions: "https://www.google.com/maps/place/Moe'z+Famous+Cheesesteaks+%26+Burgers/@42.2309478,-83.7013484,17z",
+    directions: "https://share.google/zC6Hqop296KaUuCgN",
   },
 
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://eatmoez.com",
